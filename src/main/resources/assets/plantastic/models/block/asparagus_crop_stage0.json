@@ -1,6 +1,6 @@
 {
     "parent": "block/crop",
     "textures": {
-        "crop": "blocks/asparagus_stage0"
+        "crop": "plantastic:blocks/asparagus_crop_stage0"
     }
 }

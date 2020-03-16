@@ -11,7 +11,6 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.RavagerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -29,16 +28,7 @@ import net.minecraft.world.server.ServerWorld;
 public class ModCropsBlock extends BushBlock implements IGrowable {
 	private static Block.Properties cropsProps = Block.Properties.create(Material.PLANTS).doesNotBlockMovement()
 		.hardnessAndResistance(0).tickRandomly().sound(SoundType.CROP);
-	private Item seeds;
 	private int maxAge;
-
-	public ModCropsBlock(int maxAge, Item seeds) {
-		super(cropsProps);
-		this.setDefaultState(this.stateContainer.getBaseState().with(this.getAgeProperty(), Integer.valueOf(0)));
-		this.seeds = seeds;
-		this.maxAge = maxAge;
-	}
-
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
 	private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[] {
 		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
@@ -47,6 +37,12 @@ public class ModCropsBlock extends BushBlock implements IGrowable {
 		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D),
 		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
 		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D) };
+
+	public ModCropsBlock(int maxAge) {
+		super(cropsProps);
+		this.setDefaultState(this.stateContainer.getBaseState().with(this.getAgeProperty(), Integer.valueOf(0)));
+		this.maxAge = maxAge;
+	}
 
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return SHAPE_BY_AGE[state.get(this.getAgeProperty())];
@@ -171,7 +167,7 @@ public class ModCropsBlock extends BushBlock implements IGrowable {
 	}
 
 	protected IItemProvider getSeedsItem() {
-		return this.seeds;
+		return this.getBlock().asItem();
 	}
 
 	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {

@@ -5,10 +5,12 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.celinemargaux.plantastic.common.blocks.PlantasticBlocks;
-import com.celinemargaux.plantastic.common.items.PlantasticItems;
+import com.celinemargaux.plantastic.init.Init;
 
 import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -20,6 +22,7 @@ import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
 import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(Plantastic.MODID)
@@ -33,9 +36,8 @@ public class Plantastic {
 		instance = this;
 
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		PlantasticItems.ITEMS.register(modEventBus);
-		PlantasticBlocks.BLOCKS.register(modEventBus);
-		PlantasticBlocks.CROPS.register(modEventBus);
+		Init.ITEMS.register(modEventBus);
+		Init.BLOCKS.register(modEventBus);
 
 		MinecraftForge.EVENT_BUS.register(this);
 		modEventBus.addListener(this::setup);
@@ -47,26 +49,6 @@ public class Plantastic {
 
 	}
 
-//    @SubscribeEvent
-//    public static void onRegisterItems(final RegistryEvent.Register<Item> event) {
-//    	final IForgeRegistry<Item> registry = event.getRegistry();
-//    	
-//    	ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(block -> {
-//    		final Item.Properties properties = new Item.Properties().group(ModItemGroup.PLANTASTIC);
-//    		final BlockItem blockItem = new BlockItem(block, properties);
-//    		blockItem.setRegistryName(block.getRegistryName());
-//    		registry.register(blockItem);
-//    	});
-//    	
-//    	ModCrops.CROPS.getEntries().stream().map(RegistryObject::get).forEach(crop -> {
-//    		final Item.Properties properties = new Item.Properties().group(ModItemGroup.PLANTASTIC);
-//    		final BlockItem blockItem = new BlockItem(crop, properties);
-//    		blockItem.setRegistryName(Helper.getSeedsName(crop));
-//    		registry.register(blockItem);
-//    	});
-//    	
-//    }
-
 	private void setup(final FMLCommonSetupEvent event) {
 		// some preinit code
 		LOGGER.info("HELLO FROM PREINIT");
@@ -76,6 +58,10 @@ public class Plantastic {
 	private void doClientStuff(final FMLClientSetupEvent event) {
 		// do something that can only be done on the client
 		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+		if(FMLEnvironment.dist == Dist.CLIENT) {
+			RenderType cutOutRenderType = RenderType.getCutout();
+			RenderTypeLookup.setRenderLayer(Init.ASPARAGUS_CROP.get(), cutOutRenderType);
+		}
 	}
 
 	private void enqueueIMC(final InterModEnqueueEvent event) {

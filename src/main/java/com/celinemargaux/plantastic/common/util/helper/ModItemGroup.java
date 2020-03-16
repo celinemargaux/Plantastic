@@ -1,6 +1,6 @@
 package com.celinemargaux.plantastic.common.util.helper;
 
-import com.celinemargaux.plantastic.common.items.PlantasticItems;
+import com.celinemargaux.plantastic.init.Init;
 
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,7 @@ public class ModItemGroup extends ItemGroup {
 
 	@Override
 	public ItemStack createIcon() {
-		return new ItemStack(PlantasticItems.PLANTASTIC_ICON.get());
+		return new ItemStack(Init.PLANTASTIC_ICON.get());
 	}
 
 }
