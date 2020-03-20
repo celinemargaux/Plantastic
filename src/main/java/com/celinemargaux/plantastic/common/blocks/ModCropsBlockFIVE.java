@@ -25,11 +25,11 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
-public class ModCropsBlock extends BushBlock implements IGrowable {
+public class ModCropsBlockFIVE extends BushBlock implements IGrowable {
 	private static Block.Properties cropsProps = Block.Properties.create(Material.PLANTS).doesNotBlockMovement()
 		.hardnessAndResistance(0).tickRandomly().sound(SoundType.CROP);
-	private int maxAge;
-	public static final IntegerProperty AGE = BlockStateProperties.AGE_0_7;
+	private final int maxAge = 5;
+	public static IntegerProperty AGE = BlockStateProperties.AGE_0_5;
 	private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[] {
 		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
 		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D), Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D),
@@ -38,16 +38,17 @@ public class ModCropsBlock extends BushBlock implements IGrowable {
 		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
 		Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D) };
 
-	public ModCropsBlock(int maxAge) {
+	public ModCropsBlockFIVE() {
 		super(cropsProps);
 		this.setDefaultState(this.stateContainer.getBaseState().with(this.getAgeProperty(), Integer.valueOf(0)));
-		this.maxAge = maxAge;
 	}
 
+	@Override
 	public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
 		return SHAPE_BY_AGE[state.get(this.getAgeProperty())];
 	}
 
+	@Override
 	protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos) {
 		return state.getBlock() == Blocks.FARMLAND;
 	}
@@ -72,6 +73,7 @@ public class ModCropsBlock extends BushBlock implements IGrowable {
 		return state.get(this.getAgeProperty()) >= this.getMaxAge();
 	}
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public void tick(BlockState state, ServerWorld worldIn, BlockPos pos, Random rand) {
 		super.tick(state, worldIn, pos, rand);
@@ -152,10 +154,12 @@ public class ModCropsBlock extends BushBlock implements IGrowable {
 		return f;
 	}
 
+	@Override
 	public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
 		return (worldIn.getLightSubtracted(pos, 0) >= 8 || worldIn.canSeeSky(pos)) && super.isValidPosition(state, worldIn, pos);
 	}
 
+	@Override
 	@SuppressWarnings("deprecation")
 	public void onEntityCollision(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
 		if (entityIn instanceof RavagerEntity
@@ -170,6 +174,7 @@ public class ModCropsBlock extends BushBlock implements IGrowable {
 		return this.getBlock().asItem();
 	}
 
+	@Override
 	public ItemStack getItem(IBlockReader worldIn, BlockPos pos, BlockState state) {
 		return new ItemStack(this.getSeedsItem());
 	}
@@ -189,6 +194,7 @@ public class ModCropsBlock extends BushBlock implements IGrowable {
 		this.grow(p_225535_1_, p_225535_3_, p_225535_4_);
 	}
 
+	@Override
 	protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
 		builder.add(AGE);
 	}

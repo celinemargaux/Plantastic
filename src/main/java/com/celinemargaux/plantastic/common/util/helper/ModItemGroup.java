@@ -6,7 +6,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
 public class ModItemGroup extends ItemGroup {
-	public static ModItemGroup PLANTASTIC = new ModItemGroup(ItemGroup.GROUPS.length, "Plantastic");
+	public static ModItemGroup PLANTASTIC = new ModItemGroup(ItemGroup.GROUPS.length, "plantastic_itemGroup");
 
 	private ModItemGroup(int index, String label) {
 		super(index, label);

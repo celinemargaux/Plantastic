@@ -1,6 +1,6 @@
 {
 	"item.plantastic.asparagus_item": "Asparagus",
-	"item.plantastic.asparagus_crop": "Asparagus Seeds",
+	"block.plantastic.asparagus_crop": "Asparagus Seeds",
 	"item.plantastic.barley_item": "Barley",
 	"item.plantastic.basil_item": "Basil",
 	"item.plantastic.bell_pepper_item": "Bell Pepper",
@@ -46,5 +46,6 @@
 	"item.plantastic.tomato_item": "Tomato",
 	"item.plantastic.truffle_item": "Truffle",
 	"item.plantastic.turnip_item": "Turnip",
-	"item.plantastic.zucchini_item": "Zucchini"
+	"item.plantastic.zucchini_item": "Zucchini",
+	"itemGroup.plantastic_itemGroup": "Plantastic"
 }

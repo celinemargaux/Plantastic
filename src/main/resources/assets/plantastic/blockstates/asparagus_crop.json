@@ -1,19 +1,15 @@
 {
-	"variants": {
-		"age=0": {
-			"model": "plantastic:block/asparagus_crop_stage0"
-		},
-		"age=1": {
-			"model": "plantastic:block/asparagus_crop_stage1"
-		},
-		"age=2": {
-			"model": "plantastic:block/asparagus_crop_stage2"
-		},
-		"age=3": {
-			"model": "plantastic:block/asparagus_crop_stage3"
-		},
-		"age=4": {
-			"model": "plantastic:block/asparagus_crop_stage4"
-		}
-	}
+    "variants": {
+        "age=0": { "model": "plantastic:block/asparagus_crop_stage0" },
+        "age=1": { "model": "plantastic:block/asparagus_crop_stage1" },
+        "age=2": { "model": "plantastic:block/asparagus_crop_stage1" },
+        "age=3": { "model": "plantastic:block/asparagus_crop_stage2" },
+        "age=4": { "model": "plantastic:block/asparagus_crop_stage2" },
+        "age=5": { "model": "plantastic:block/asparagus_crop_stage3" },
+        "age=6": { "model": "plantastic:block/asparagus_crop_stage3" },
+        "age=7": { "model": "plantastic:block/asparagus_crop_stage4" }
+    }
 }
+
+
+

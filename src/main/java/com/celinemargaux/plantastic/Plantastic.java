@@ -36,6 +36,8 @@ public class Plantastic {
 		instance = this;
 
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		
+		Init.registerJuices();
 		Init.ITEMS.register(modEventBus);
 		Init.BLOCKS.register(modEventBus);
 

@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "plantastic:asparagus_seeds"
+          "name": "plantastic:asparagus_crop"
         }
       ]
     },
@@ -26,7 +26,7 @@
               }
             }
           ],
-          "name": "plantastic:asparagus_item"
+          "name": "plantastic:asparagus"
         }
       ],
       "conditions": [
@@ -34,7 +34,7 @@
           "condition": "minecraft:block_state_property",
           "block": "plantastic:asparagus_crop",
           "properties": {
-            "age": "4"
+            "age": "7"
           }
         }
       ]

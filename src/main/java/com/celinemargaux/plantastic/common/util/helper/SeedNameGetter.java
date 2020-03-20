@@ -2,7 +2,7 @@ package com.celinemargaux.plantastic.common.util.helper;
 
 import net.minecraft.block.Block;
 
-public class Helper {
+public class SeedNameGetter {
 	public static String getSeedsName(Block crop) {
 		StringBuilder cropID = new StringBuilder(crop.getRegistryName().toString());
 		StringBuilder cropName = new StringBuilder(
