@@ -1,14 +1,16 @@
 package com.celinemargaux.plantastic.common.util.helper;
 
+import com.celinemargaux.plantastic.common.util.helper.json.Formatter;
+
 public class ItemOrBlock {
-	private String registryName;
-	private String type;
-	private int hunger;
-	private float saturaiont;
-	private int growTime;
+	private String registryName = "";
+	private String type = "";
+	private int hunger = 0;
+	private float saturaiont = 0.0f;
+	private int growTime = 0;
 	
 	public ItemOrBlock(String name, String type, int hunger, float sat, int grow) {
-		this.registryName = name;
+		this.registryName = Formatter.formatRegistryName(name);
 		this.type = type;
 		this.hunger = hunger;
 		this.saturaiont = sat;

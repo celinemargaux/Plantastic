@@ -1,0 +1,173 @@
+{
+	"ItemOrBlock": 
+	[
+		{
+			"registryName": "apricot",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "1.6",
+			"growTime": ""
+		},
+		{
+			"registryName": "banana",
+			"type": "EdiblePlant",
+			"hunger": "4",
+			"saturation": "2,4",
+			"growTime": ""
+		},
+		{
+			"registryName": "black currant",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "0.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "blackberry",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "0.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "blueberry",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "0.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "cherry",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "1.4",
+			"growTime": ""
+		},
+		{
+			"registryName": "elderberry",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "0.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "fig",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "2.0",
+			"growTime": ""
+		},
+		{
+			"registryName": "grape",
+			"type": "EdiblePlant",
+			"hunger": "4",
+			"saturation": "2.0",
+			"growTime": ""
+		},
+		{
+			"registryName": "lemon",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "1.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "lychee",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "1.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "mango",
+			"type": "EdiblePlant",
+			"hunger": "4",
+			"saturation": "2.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "orange",
+			"type": "EdiblePlant",
+			"hunger": "4",
+			"saturation": "2.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "peach",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "1.6",
+			"growTime": ""
+		},
+		{
+			"registryName": "pear",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "1.4",
+			"growTime": ""
+		},
+		{
+			"registryName": "persimmon",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "1.6",
+			"growTime": ""
+		},
+		{
+			"registryName": "plum",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "1.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "pommegranate",
+			"type": "EdiblePlant",
+			"hunger": "4",
+			"saturation": "2.0",
+			"growTime": ""
+		},
+		{
+			"registryName": "raspberry",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "0.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "red currant",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "0.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "rhubarb",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "1.6",
+			"growTime": ""
+		},
+		{
+			"registryName": "starfruit",
+			"type": "EdiblePlant",
+			"hunger": "3",
+			"saturation": "1.0",
+			"growTime": ""
+		},
+		{
+			"registryName": "strawbery",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "0.2",
+			"growTime": ""
+		},
+		{
+			"registryName": "white currant",
+			"type": "EdiblePlant",
+			"hunger": "2",
+			"saturation": "0.2",
+			"growTime": ""
+		}
+	]
+}

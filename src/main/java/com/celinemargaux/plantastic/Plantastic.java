@@ -33,11 +33,11 @@ public class Plantastic {
 	public static Plantastic instance;
 
 	public Plantastic() {
-		instance = this;
-
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-		
-		Init.registerJuices();
+		instance = this;
+		Init.initFiles();
+
+		Init.registerFruitsJuicesJams();
 		Init.ITEMS.register(modEventBus);
 		Init.BLOCKS.register(modEventBus);
 
@@ -60,7 +60,7 @@ public class Plantastic {
 	private void doClientStuff(final FMLClientSetupEvent event) {
 		// do something that can only be done on the client
 		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
-		if(FMLEnvironment.dist == Dist.CLIENT) {
+		if (FMLEnvironment.dist == Dist.CLIENT) {
 			RenderType cutOutRenderType = RenderType.getCutout();
 			RenderTypeLookup.setRenderLayer(Init.ASPARAGUS_CROP.get(), cutOutRenderType);
 		}
