@@ -10,4 +10,4 @@ Some of the **awesome** features of our mod:
 - Beautiful flowers
 - Berry bushes
 - Useful items and blocks
-- Decorative blocks, furniture and more!
+- Decorative blocks, furniture, entities and more!
