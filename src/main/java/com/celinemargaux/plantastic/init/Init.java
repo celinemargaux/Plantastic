@@ -6,9 +6,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -23,6 +20,7 @@ import com.celinemargaux.plantastic.common.util.helper.ModItemGroup;
 import com.celinemargaux.plantastic.common.util.helper.json.ItemModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonReader;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BushBlock;
@@ -115,13 +113,16 @@ public class Init {
 	 */
 
 	public static void registerFruitsJuicesJams() {
+		Plantastic.LOGGER.debug("Add Fruits, Juices and Jams to ITEMS");
 		List<EdiblePlant> fruits = jsonHandler.getEdiblePlants();
 
 		for (EdiblePlant fruit : fruits) {
+
 			ITEMS.register(fruit.getRegistryName().toString(),
 				() -> new EdiblePlant(fruit.getFood().getHealing(), fruit.getFood().getSaturation()));
 			ITEMS.register(fruit + "_juice", () -> new ModFood(4, 1.8f));
 			ITEMS.register(fruit + "_jam", () -> new ModFood(5, 2.6f));
+			Plantastic.LOGGER.debug("Fruit " + fruit.getRegistryName() + " added");
 			jsonHandler.makeItemModelFile(fruit);
 		}
 	}
@@ -144,13 +145,13 @@ public class Init {
 		private List<ItemOrBlock> list = new ArrayList<>();
 
 		public void deserializeToLists(String fileSource) {
-			try (FileReader reader = new FileReader(fileSource)) {
+			try (JsonReader reader = new JsonReader(new FileReader(fileSource))) {
 				Type collectionType = new TypeToken<Collection<ItemOrBlock>>() {
 				}.getType();
-				Plantastic.LOGGER.info("deserializing started!");
+				Plantastic.LOGGER.debug("deserializing started!");
 				list = gson.fromJson(reader, collectionType);
 
-				Plantastic.LOGGER.info("First Item on list: " + list.get(0));
+				Plantastic.LOGGER.debug("First Item on list: " + list.get(0).getRegistryName());
 
 				for (ItemOrBlock thing : list) {
 					switch (thing.getType()) {
@@ -206,10 +207,9 @@ public class Init {
 		public void makeItemModelFile(Item item) {
 			String name = item.getRegistryName().toString();
 			ItemModel itemModel = new ItemModel("item/generated", 1, Plantastic.MODID + ":items/" + name);
-			Path newFilePath = Paths.get("/Plantastic/src/main/resources/assets/plantastic/models/item/" + name);
-			File modeljson = new File(newFilePath.toString());
-			try (FileWriter writer = new FileWriter(modeljson)) {
-				Files.createFile(newFilePath);
+			File modeljson = new File("/Plantastic/src/main/resources/assets/plantastic/models/item/" + name);
+			try (FileWriter writer = new FileWriter(
+				"/Plantastic/src/main/resources/assets/plantastic/models/item/" + name + ".json")) {
 				String json = gson.toJson(itemModel);
 				writer.write(json);
 			} catch (IOException e) {

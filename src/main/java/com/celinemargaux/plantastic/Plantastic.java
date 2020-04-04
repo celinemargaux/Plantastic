@@ -7,7 +7,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.celinemargaux.plantastic.init.Init;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraftforge.api.distmarker.Dist;
@@ -35,8 +34,8 @@ public class Plantastic {
 	public Plantastic() {
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		instance = this;
+		
 		Init.initFiles();
-
 		Init.registerFruitsJuicesJams();
 		Init.ITEMS.register(modEventBus);
 		Init.BLOCKS.register(modEventBus);
@@ -53,13 +52,11 @@ public class Plantastic {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		// some preinit code
-		LOGGER.info("HELLO FROM PREINIT");
-		LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
 	}
 
+	@SuppressWarnings("resource")
 	private void doClientStuff(final FMLClientSetupEvent event) {
-		// do something that can only be done on the client
-		LOGGER.info("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
+		LOGGER.debug("Got game settings {}", event.getMinecraftSupplier().get().gameSettings);
 		if (FMLEnvironment.dist == Dist.CLIENT) {
 			RenderType cutOutRenderType = RenderType.getCutout();
 			RenderTypeLookup.setRenderLayer(Init.ASPARAGUS_CROP.get(), cutOutRenderType);
@@ -69,20 +66,20 @@ public class Plantastic {
 	private void enqueueIMC(final InterModEnqueueEvent event) {
 		// some example code to dispatch IMC to another mod
 		InterModComms.sendTo("examplemod", "helloworld", () -> {
-			LOGGER.info("Hello world from the MDK");
+			LOGGER.debug("Hello world from the MDK");
 			return "Hello world";
 		});
 	}
 
 	private void processIMC(final InterModProcessEvent event) {
 		// some example code to receive and process InterModComms from other mods
-		LOGGER.info("Got IMC {}", event.getIMCStream().map(m -> m.getMessageSupplier().get()).collect(Collectors.toList()));
+		LOGGER.debug("Got IMC {}", event.getIMCStream().map(m -> m.getMessageSupplier().get()).collect(Collectors.toList()));
 	}
 
 	// You can use SubscribeEvent and let the Event Bus discover methods to call
 	@SubscribeEvent
 	public void onServerStarting(FMLServerStartingEvent event) {
 		// do something when the server starts
-		LOGGER.info("HELLO from server starting");
+		LOGGER.debug("HELLO from server starting");
 	}
 }
