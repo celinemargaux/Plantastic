@@ -40,7 +40,8 @@ public class JSONHandler {
 		try (JsonReader reader = new JsonReader(new FileReader(fileSource))) {
 			Type collectionType = new TypeToken<Collection<ItemOrBlock>>() {
 			}.getType();
-			Plantastic.LOGGER.debug("deserializing started!");
+			Plantastic.LOGGER.debug("Deserializing started!");
+			System.out.println("Hello from deserializing!");
 			list = gson.fromJson(reader, collectionType);
 
 			Plantastic.LOGGER.debug("First Item on list: " + list.get(0).getRegistryName());

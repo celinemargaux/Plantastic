@@ -96,6 +96,8 @@ public class Init {
 	 */
 
 	public static void registerFruitsJuicesJams() {
+		JSONHandler.deserializeToLists("Plantastic/src/main/resources/lists/fruits.json");
+
 		Plantastic.LOGGER.debug("Add Fruits, Juices and Jams to ITEMS");
 		List<EdiblePlant> fruits = JSONHandler.getEdiblePlants();
 

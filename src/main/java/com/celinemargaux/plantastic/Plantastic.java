@@ -27,7 +27,8 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 @Mod(Plantastic.MODID)
 public class Plantastic {
 	// Directly reference a log4j logger.
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static final Logger LOGGER = LogManager.getLogger(Plantastic.MODID);
+	
 	public static final String MODID = "plantastic";
 	public static Plantastic instance;
 
@@ -43,7 +44,7 @@ public class Plantastic {
 		modEventBus.addListener(this::processIMC);
 		modEventBus.addListener(this::onServerStarting);
 
-		Init.registerFruitsJuicesJams();
+		
 		Init.ITEMS.register(modEventBus);
 		Init.BLOCKS.register(modEventBus);
 		Init.CROPS.register(modEventBus);
@@ -53,6 +54,7 @@ public class Plantastic {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		// some preinit code
+		Init.registerFruitsJuicesJams();
 	}
 
 	@SuppressWarnings("resource")
