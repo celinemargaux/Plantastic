@@ -34,19 +34,20 @@ public class Plantastic {
 	public Plantastic() {
 		final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		instance = this;
-		
-		Init.initFiles();
-		Init.registerFruitsJuicesJams();
-		Init.ITEMS.register(modEventBus);
-		Init.BLOCKS.register(modEventBus);
-
 		MinecraftForge.EVENT_BUS.register(this);
+
 		modEventBus.addListener(this::setup);
 		modEventBus.addListener(this::doClientStuff);
 		modEventBus.addListener(this::processIMC);
 		modEventBus.addListener(this::enqueueIMC);
 		modEventBus.addListener(this::processIMC);
 		modEventBus.addListener(this::onServerStarting);
+
+		Init.registerFruitsJuicesJams();
+		Init.ITEMS.register(modEventBus);
+		Init.BLOCKS.register(modEventBus);
+		Init.CROPS.register(modEventBus);
+		Init.SEEDS.register(modEventBus);
 
 	}
 

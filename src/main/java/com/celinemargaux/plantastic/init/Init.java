@@ -1,29 +1,15 @@
 package com.celinemargaux.plantastic.init;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import com.celinemargaux.plantastic.Plantastic;
 import com.celinemargaux.plantastic.common.blocks.ModCropsBlockSEVEN;
-import com.celinemargaux.plantastic.common.blocks.ModCropsBlockTHREE;
 import com.celinemargaux.plantastic.common.items.EdiblePlant;
 import com.celinemargaux.plantastic.common.items.ModFood;
-import com.celinemargaux.plantastic.common.util.helper.ItemOrBlock;
 import com.celinemargaux.plantastic.common.util.helper.ModItemGroup;
-import com.celinemargaux.plantastic.common.util.helper.json.ItemModel;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
+import com.celinemargaux.plantastic.common.util.helper.json.JSONHandler;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BushBlock;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
@@ -31,17 +17,14 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class Init {
-	static Init.JSONHandler jsonHandler = new Init().new JSONHandler();
-
-	public static void initFiles() {
-		jsonHandler.deserializeToLists("/Plantastic/src/main/resources/lists/fruits.json");
-	}
 
 	public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS, Plantastic.MODID);
 	public static final DeferredRegister<Block> BLOCKS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Plantastic.MODID);
+	public static final DeferredRegister<Block> CROPS = new DeferredRegister<>(ForgeRegistries.BLOCKS, Plantastic.MODID);
+	public static final DeferredRegister<Item> SEEDS = new DeferredRegister<>(ForgeRegistries.ITEMS, Plantastic.MODID);
 
 	// CROPS
-	public static final RegistryObject<Block> ASPARAGUS_CROP = BLOCKS.register("asparagus_crop", () -> new ModCropsBlockSEVEN());
+	public static final RegistryObject<Block> ASPARAGUS_CROP = CROPS.register("asparagus_crop", () -> new ModCropsBlockSEVEN());
 
 	// BLOCKS
 
@@ -103,7 +86,7 @@ public class Init {
 		() -> new Item(new Item.Properties()));
 
 	// SEEDS
-	public static final RegistryObject<Item> ASPARAGUS_SEEDS = ITEMS.register("asparagus_crop",
+	public static final RegistryObject<Item> ASPARAGUS_SEEDS = SEEDS.register("asparagus_crop",
 		() -> new BlockItem(ASPARAGUS_CROP.get(), new Item.Properties().group(ModItemGroup.PLANTASTIC)));
 
 	/*
@@ -114,143 +97,15 @@ public class Init {
 
 	public static void registerFruitsJuicesJams() {
 		Plantastic.LOGGER.debug("Add Fruits, Juices and Jams to ITEMS");
-		List<EdiblePlant> fruits = jsonHandler.getEdiblePlants();
+		List<EdiblePlant> fruits = JSONHandler.getEdiblePlants();
 
 		for (EdiblePlant fruit : fruits) {
-
-			ITEMS.register(fruit.getRegistryName().toString(),
+			String fruitName = fruit.getRegistryName().toString();
+			ITEMS.register(fruitName,
 				() -> new EdiblePlant(fruit.getFood().getHealing(), fruit.getFood().getSaturation()));
-			ITEMS.register(fruit + "_juice", () -> new ModFood(4, 1.8f));
-			ITEMS.register(fruit + "_jam", () -> new ModFood(5, 2.6f));
-			Plantastic.LOGGER.debug("Fruit " + fruit.getRegistryName() + " added");
-			jsonHandler.makeItemModelFile(fruit);
-		}
-	}
-
-	@SuppressWarnings("unused")
-	private class JSONHandler {
-		public Gson gson = new Gson();
-		private List<EdiblePlant> ediblePlants = new ArrayList<>();
-		private List<String> ediblePlantNames = new ArrayList<>();
-
-		private List<ModFood> modFoods = new ArrayList<>();
-		private List<String> modFoodNames = new ArrayList<>();
-
-		private List<BushBlock> modCrops = new ArrayList<>();
-		private List<String> modCropsNames = new ArrayList<>();
-
-		private List<Item> items = new ArrayList<>();
-		private List<Object> blocks = new ArrayList<>();
-
-		private List<ItemOrBlock> list = new ArrayList<>();
-
-		public void deserializeToLists(String fileSource) {
-			try (JsonReader reader = new JsonReader(new FileReader(fileSource))) {
-				Type collectionType = new TypeToken<Collection<ItemOrBlock>>() {
-				}.getType();
-				Plantastic.LOGGER.debug("deserializing started!");
-				list = gson.fromJson(reader, collectionType);
-
-				Plantastic.LOGGER.debug("First Item on list: " + list.get(0).getRegistryName());
-
-				for (ItemOrBlock thing : list) {
-					switch (thing.getType()) {
-					case "EdiblePlant": {
-						ediblePlants.add(new EdiblePlant(thing.getHunger(), thing.getSaturaiont()));
-						ediblePlantNames.add(thing.getRegistryName());
-						break;
-					}
-					case "ModFood": {
-						modFoods.add(new ModFood(thing.getHunger(), thing.getSaturaiont()));
-						modFoodNames.add(thing.getRegistryName());
-						break;
-					}
-					case "ModCrop": {
-						if (thing.getGrowTime() == 3) {
-							modCrops.add(new ModCropsBlockTHREE());
-							modCropsNames.add(thing.getRegistryName());
-						} else if (thing.getGrowTime() == 5) {
-							modCrops.add(new ModCropsBlockTHREE());
-							modCropsNames.add(thing.getRegistryName());
-						} else if (thing.getGrowTime() == 7) {
-							modCrops.add(new ModCropsBlockTHREE());
-							modCropsNames.add(thing.getRegistryName());
-						} else {
-							Plantastic.LOGGER.warn(
-								"This Crop has a nondefault grow time: " + thing.getGrowTime() + ", Object: " + thing.toString());
-						}
-						break;
-					}
-					default: {
-						Plantastic.LOGGER
-							.warn("This Crop has a nondefault type: " + thing.getType() + ", Object: " + thing.toString());
-						break;
-					}
-					}
-				}
-			} catch (FileNotFoundException e) {
-				Plantastic.LOGGER.error(e.getStackTrace());
-			} catch (IOException e1) {
-				Plantastic.LOGGER.error(e1.getStackTrace());
-			}
-
-		}
-
-		public void makeBlockStatesFile(Block block) {
-
-		}
-
-		public void makeBlockModelFiles(Block block) {
-
-		}
-
-		public void makeItemModelFile(Item item) {
-			String name = item.getRegistryName().toString();
-			ItemModel itemModel = new ItemModel("item/generated", 1, Plantastic.MODID + ":items/" + name);
-			File modeljson = new File("/Plantastic/src/main/resources/assets/plantastic/models/item/" + name);
-			try (FileWriter writer = new FileWriter(
-				"/Plantastic/src/main/resources/assets/plantastic/models/item/" + name + ".json")) {
-				String json = gson.toJson(itemModel);
-				writer.write(json);
-			} catch (IOException e) {
-				Plantastic.LOGGER.warn(e.getStackTrace());
-			}
-		}
-
-		public List<Item> getItems() {
-			return items;
-		}
-
-		public void setItems(List<Item> items) {
-			jsonHandler.items = items;
-		}
-
-		public List<EdiblePlant> getEdiblePlants() {
-			return ediblePlants;
-		}
-
-		public List<String> getEdiblePlantNames() {
-			return ediblePlantNames;
-		}
-
-		public List<ModFood> getModFoods() {
-			return modFoods;
-		}
-
-		public List<String> getModFoodNames() {
-			return modFoodNames;
-		}
-
-		public List<BushBlock> getModCrops() {
-			return modCrops;
-		}
-
-		public List<String> getModCropsNames() {
-			return modCropsNames;
-		}
-
-		public List<Object> getBlocks() {
-			return blocks;
+			ITEMS.register(fruitName + "_juice", () -> new ModFood(4, 1.8f));
+			ITEMS.register(fruitName + "_jam", () -> new ModFood(5, 2.6f));
+			Plantastic.LOGGER.debug(fruitName + " added");
 		}
 	}
 }
